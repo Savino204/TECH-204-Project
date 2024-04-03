@@ -1,0 +1,39 @@
+/* Styling the container */
+.container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+}
+
+/* Styling the button */
+button {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #007bff; //blue
+    border: none;
+    cursor: pointer;
+}
+
+/* Styling the button when active (clicked) */
+button:active {
+    background-color: #be4d25; //orange
+}
+
+/* Styling the recorded audio list */
+#audioList {
+    list-style: none;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    margin-top: 50px; /* Adjust as needed */
+}
+
+/* Styling the recorded audio items */
+.recorded-audio {
+    width: 100%;
+}
