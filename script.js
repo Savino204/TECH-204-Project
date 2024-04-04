@@ -9,10 +9,10 @@ const recordButton = document.getElementById('recordButton'); // Button element 
 const audioList = document.getElementById('audioList'); // Audio list element
 
 // Event listener for mouse down (button click)
-recordButton.addEventListener('mousedown', startRecording);
+recordButton.addEventListener('touchstart', startRecording);
 
 // Event listener for mouse up (button release)
-recordButton.addEventListener('mouseup', stopRecording);
+recordButton.addEventListener('touchend', stopRecording);
 
 // Function to start recording audio
 function startRecording() {
