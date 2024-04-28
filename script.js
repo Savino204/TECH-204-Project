@@ -67,7 +67,7 @@ function displayRecordedAudio() {
 
     // Create a gain node to control volume
     const gainNode = audioContext.createGain();
-    gainNode.gain.value = 1; // Set volume to maximum (adjust as needed)
+    gainNode.gain.value = 1.5; // Set volume to maximum (adjust as needed)
 
     // Connect the audio source to the gain node, and connect the gain node to the destination (speakers)
     source.connect(gainNode);
