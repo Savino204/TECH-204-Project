@@ -50,52 +50,84 @@ function handleDataAvailable(event) {
     }
 }
 
+// // Function to display the recorded audio files
+// function displayRecordedAudio() {
+//     const blob = new Blob(recordedChunks, { type: 'audio/mpeg' }); // Change type to 'audio/mpeg' for MP3 format
+//     const url = URL.createObjectURL(blob); // Create a URL from the Blob
+    
+//     // Create a new audio context
+//     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    
+//     // Create a new audio element
+//     const audioElement = document.createElement('audio');
+//     audioElement.src = url;
+
+//     // Create a new media source node
+//     const source = audioContext.createMediaElementSource(audioElement);
+
+//     // Create a gain node to control volume
+//     const gainNode = audioContext.createGain();
+//     gainNode.gain.value = 1.5; // Set volume to maximum (adjust as needed)
+
+//     // Connect the audio source to the gain node, and connect the gain node to the destination (speakers)
+//     source.connect(gainNode);
+//     gainNode.connect(audioContext.destination);
+
+//     audioElement.loop = true;
+    
+//     // Append the audio element to the DOM
+//     document.body.appendChild(audioElement);
+    
+//     // Play the audio
+//     audioElement.play();
+// }
+
+// Define variables for controlling playback
+let audioBuffer;
+let audioSourceNode;
+
 // Function to display the recorded audio files
 function displayRecordedAudio() {
     const blob = new Blob(recordedChunks, { type: 'audio/mpeg' }); // Change type to 'audio/mpeg' for MP3 format
-    const url = URL.createObjectURL(blob); // Create a URL from the Blob
-    
-    // Create a new audio context
+
+    // Decode the audio blob into an AudioBuffer
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    
-    // Create a new audio element
-    const audioElement = document.createElement('audio');
-    audioElement.src = url;
-
-    // Create a new media source node
-    const source = audioContext.createMediaElementSource(audioElement);
-
-    // Create a gain node to control volume
-    const gainNode = audioContext.createGain();
-    gainNode.gain.value = 1.5; // Set volume to maximum (adjust as needed)
-
-    // Connect the audio source to the gain node, and connect the gain node to the destination (speakers)
-    source.connect(gainNode);
-    gainNode.connect(audioContext.destination);
-
-    audioElement.loop = true;
-    
-    // Append the audio element to the DOM
-    document.body.appendChild(audioElement);
-    
-    // Play the audio
-    audioElement.play();
+    const fileReader = new FileReader();
+    fileReader.onload = function() {
+        audioContext.decodeAudioData(fileReader.result, function(buffer) {
+            audioBuffer = buffer;
+            playLatestRecordedAudio(); // Automatically start playback
+        });
+    };
+    fileReader.readAsArrayBuffer(blob);
 }
 
-//Play the latest recorded audio
+// Function to play the latest recorded audio
 function playLatestRecordedAudio() {
-    const latestAudio = document.querySelector(`.recorded-audio[data-index="${recordingIndex - 1}"]`); // Get the latest recorded audio element
-    if (latestAudio) {
-        // latestAudio.loop = true; // Set the loop attribute to true
-        //latestAudio.play(); // Play the latest recorded audio
+    if (audioBuffer) {
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+        const gainNode = audioContext.createGain();
+        gainNode.gain.value = 1.5;
+        
+        // Stop any previous playback
+        stopRecordedAudio();
+
+        // Create a new AudioBufferSourceNode
+        audioSourceNode = audioContext.createBufferSource();
+        audioSourceNode.buffer = audioBuffer;
+        audioSourceNode.loop = true; // Set loop attribute to true
+        audioSourceNode.connect(gainNode);
+        gainNode.connect(audioContext.destination); // Connect to audio output
+        audioSourceNode.start(); // Start playback
     }
 }
 
+// Function to stop recorded audio playback
 function stopRecordedAudio() {
-    const prevAudio = document.querySelector(`.recorded-audio[data-index="${recordingIndex - 1}"]`); // Get the latest recorded audio element
-    if (prevAudio) {
-        // prevAudio.loop = false; // Set the loop attribute to true
-        //prevAudio.pause(); // Play the latest recorded audio
+    if (audioSourceNode) {
+        audioSourceNode.stop(); // Stop playback
+        audioSourceNode.disconnect(); // Disconnect from audio output
     }
 }
 
