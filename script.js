@@ -73,6 +73,8 @@ function displayRecordedAudio() {
     source.connect(gainNode);
     gainNode.connect(audioContext.destination);
 
+    audioElement.loop = true;
+    
     // Append the audio element to the DOM
     document.body.appendChild(audioElement);
     
