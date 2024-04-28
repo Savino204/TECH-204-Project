@@ -52,7 +52,7 @@ function handleDataAvailable(event) {
 
 // Function to display the recorded audio files
 function displayRecordedAudio() {
-    const blob = new Blob(recordedChunks, { type: 'audio/wav' }); // Create a Blob from the recorded audio chunks
+    const blob = new Blob(recordedChunks, { type: 'audio/mpeg' }); // Create a Blob from the recorded audio chunks
     const url = URL.createObjectURL(blob); // Create a URL from the Blob
     
     // Create a new audio element
