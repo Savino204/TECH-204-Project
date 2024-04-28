@@ -86,16 +86,16 @@ function displayRecordedAudio() {
 function playLatestRecordedAudio() {
     const latestAudio = document.querySelector(`.recorded-audio[data-index="${recordingIndex - 1}"]`); // Get the latest recorded audio element
     if (latestAudio) {
-        latestAudio.loop = true; // Set the loop attribute to true
-        latestAudio.play(); // Play the latest recorded audio
+        // latestAudio.loop = true; // Set the loop attribute to true
+        //latestAudio.play(); // Play the latest recorded audio
     }
 }
 
 function stopRecordedAudio() {
     const prevAudio = document.querySelector(`.recorded-audio[data-index="${recordingIndex - 1}"]`); // Get the latest recorded audio element
     if (prevAudio) {
-        prevAudio.loop = false; // Set the loop attribute to true
-        prevAudio.pause(); // Play the latest recorded audio
+        // prevAudio.loop = false; // Set the loop attribute to true
+        //prevAudio.pause(); // Play the latest recorded audio
     }
 }
 
