@@ -50,38 +50,6 @@ function handleDataAvailable(event) {
     }
 }
 
-// // Function to display the recorded audio files
-// function displayRecordedAudio() {
-//     const blob = new Blob(recordedChunks, { type: 'audio/mpeg' }); // Change type to 'audio/mpeg' for MP3 format
-//     const url = URL.createObjectURL(blob); // Create a URL from the Blob
-    
-//     // Create a new audio context
-//     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    
-//     // Create a new audio element
-//     const audioElement = document.createElement('audio');
-//     audioElement.src = url;
-
-//     // Create a new media source node
-//     const source = audioContext.createMediaElementSource(audioElement);
-
-//     // Create a gain node to control volume
-//     const gainNode = audioContext.createGain();
-//     gainNode.gain.value = 1.5; // Set volume to maximum (adjust as needed)
-
-//     // Connect the audio source to the gain node, and connect the gain node to the destination (speakers)
-//     source.connect(gainNode);
-//     gainNode.connect(audioContext.destination);
-
-//     audioElement.loop = true;
-    
-//     // Append the audio element to the DOM
-//     document.body.appendChild(audioElement);
-    
-//     // Play the audio
-//     audioElement.play();
-// }
-
 // Define variables for controlling playback
 let audioBuffer;
 let audioSourceNode;
